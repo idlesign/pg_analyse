@@ -2,13 +2,19 @@ pg_analyse
 ==========
 https://github.com/idlesign/pg_analyse
 
-|release| |lic|
+|release| |lic| |ci| |coverage|
 
 .. |release| image:: https://img.shields.io/pypi/v/pg_analyse.svg
     :target: https://pypi.python.org/pypi/pg_analyse
 
 .. |lic| image:: https://img.shields.io/pypi/l/pg_analyse.svg
     :target: https://pypi.python.org/pypi/pg_analyse
+
+.. |ci| image:: https://img.shields.io/travis/idlesign/pg_analyse/master.svg
+    :target: https://travis-ci.org/idlesign/pg_analyse
+
+.. |coverage| image:: https://img.shields.io/coveralls/idlesign/pg_analyse/master.svg
+    :target: https://coveralls.io/r/idlesign/pg_analyse
 
 
 Description
