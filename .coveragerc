@@ -1,0 +1,3 @@
+[run]
+source = pg_analyse/
+omit = pg_analyse/cli.py
