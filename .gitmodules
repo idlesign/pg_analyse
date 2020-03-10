@@ -1,3 +1,3 @@
 [submodule "pg_analyse/sql/contrib/index_health"]
 	path = pg_analyse/sql/contrib/index_health
-	url = git@github.com:mfvanek/pg-index-health-sql.git
+	url = https://github.com/mfvanek/pg-index-health-sql.git
