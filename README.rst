@@ -109,5 +109,4 @@ Adding Inspection
 To add a new inspection to ``pg_analyse``:
 
 1. Compose SQL for inspection and put it into a file under ``sql/`` directory.
-2. Add a subclass of ``Inspection`` into ``inspections/bundled.py``.
-  Fill in ``alias``, ``sql_name`` attributes (see docstrings in ``Inspection``).
+2. Add a subclass of ``Inspection`` into ``inspections/bundled.py``. Fill in ``alias``, ``sql_name`` attributes (see docstrings in ``Inspection``).
