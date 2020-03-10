@@ -6,7 +6,7 @@ from .formatters import Formatter, TableFormatter
 from .inspections import Inspection, InspectionResult
 from .settings import ENV_VAR
 
-try:
+try:  # pragma: nocover
     from envbox import get_environment
     environ = get_environment()
 

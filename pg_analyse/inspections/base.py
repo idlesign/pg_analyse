@@ -35,11 +35,9 @@ class Inspection:
 
     def __init__(self, **kwargs):
 
-        if not self.title:
-            self.title = self.alias
+        self.title = self.title or self.alias
 
-        if not self.sql_name:
-            self.sql_name = self.alias
+        self.sql_name = self.sql_name or self.alias
 
         self.arguments = {**self.params, **kwargs}
 
