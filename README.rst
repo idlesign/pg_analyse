@@ -27,6 +27,9 @@ Can give you some information on:
 * Tables missing PKs and indexes.
 
 
+.. note:: SQLs used for inspections are available in https://github.com/mfvanek/pg-index-health-sql
+
+
 Requirements
 ------------
 
