@@ -53,11 +53,12 @@ class Formatter:
     def _get_rows_processed(self):
 
         column_casters = []
+        human = self.human
 
         for name in self.inspection.result.columns:
             func = lambda value: value
 
-            if 'size' in name:
+            if human and 'size' in name:
                 func = self.humanize_size
 
             column_casters.append(func)
