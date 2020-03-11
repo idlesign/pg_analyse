@@ -70,7 +70,7 @@ Python module
 
 .. code-block:: python
 
-    from pg_analyse.toolbox import Analyser
+    from pg_analyse.toolbox import Analyser, analyse_and_format
 
     analyser = Analyser(dsn='user=test')
 
@@ -79,6 +79,9 @@ Python module
 
     print(inspection.alias)
     print(inspection.result)
+
+    # Shortcut function is available:
+    out = analyse_and_format()
 
 
 CLI
@@ -93,8 +96,8 @@ CLI
     ; print out human values (e.g. sizes) in human-friendly way:
     $ pg_analyse run --human
 
-    ; Run certain inspections:
-    $ pg_analyse run --one idx_unused --one idx_nulls
+    ; Run certain inspections, override default params
+    $ pg_analyse run --one idx_unused --one idx_bloat --args "idx_bloat:schema=my,bloat_min=20;idx_unused:schema=my"
 
     ; Use explicitly passed DSN:
     $ pg_analyse run --dsn "host=myhost.net port=6432 user=test password=xxx sslmode=verify-full sslrootcert=/home/my.pem"
@@ -103,8 +106,8 @@ CLI
     $ pg_analyse run --fmt json
 
 
-Adding Inspection
------------------
+Adding Inspections
+------------------
 
 To add a new inspection to ``pg_analyse``:
 

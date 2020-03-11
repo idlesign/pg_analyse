@@ -47,7 +47,6 @@ class IndexesDuplicated(_IndexHealthInspection):
     }
 
 
-
 class IndexesMissingForPk(_IndexHealthInspection):
     """Reveals foreign keys without indexes."""
 

@@ -36,13 +36,14 @@ class Inspection:
         if cls.alias:
             cls.inspections_all.append(cls)
 
-    def __init__(self, **kwargs):
+    def __init__(self, *, args: Dict[str, str] = None):
 
         self.title = self.title or self.alias
 
         self.sql_name = self.sql_name or self.alias
 
-        self.arguments = {**self.params, **kwargs}
+        self.arguments = {**self.params, **(args or {})}
+        """User supplied arguments to replace defaults."""
 
         self.result: Optional[InspectionResult] = None
         """Inspection run result. Populated runtime."""

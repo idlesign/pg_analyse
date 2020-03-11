@@ -7,7 +7,7 @@ import click
 from pg_analyse import VERSION_STR
 from pg_analyse.formatters import Formatter
 from pg_analyse.inspections.base import Inspection
-from pg_analyse.toolbox import analyse_and_format
+from pg_analyse.toolbox import analyse_and_format, parse_args_string
 
 
 @click.group()
@@ -33,9 +33,20 @@ def entry_point():
     help='Use human friendly values formatting (e.g. sizes)',
     is_flag=True
 )
-def run(dsn, fmt, one, human):
+@click.option(
+    '--args',
+    help='Arguments to pass to inspections. E.g.: "idx_bloat:schema=my,bloat_min=20;idx_unused:schema=my"',
+)
+def run(dsn, fmt, one, human, args):
     """Run analysis."""
-    click.secho(analyse_and_format(dsn=dsn, fmt=fmt or '', only=one, human=human))
+
+    click.secho(analyse_and_format(
+        dsn=dsn,
+        fmt=fmt or '',
+        only=one,
+        human=human,
+        arguments=parse_args_string(args)
+    ))
 
 
 @entry_point.command()
