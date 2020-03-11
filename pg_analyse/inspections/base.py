@@ -1,6 +1,6 @@
 from collections import namedtuple
 from pathlib import Path
-from typing import List, Type, Optional
+from typing import List, Type, Optional, Dict
 
 from ..settings import DIR_SQL
 
@@ -18,6 +18,9 @@ class Inspection:
 
     params: dict = {}
     """Parameters accepted by this inspection."""
+
+    params_aliases: Dict[str, str] = {}
+    """Param alias mapping name->sqlname."""
 
     sql_name: str = ''
     """SQL template file name."""
@@ -57,9 +60,11 @@ class Inspection:
         """Returns SQL ready to be executed."""
 
         out = self._tpl_read()
+        aliases = self.params_aliases
 
         for name, value in self.arguments.items():
-            out = out.replace(f':{name}', f"'{value}'")
+            name_sql = aliases.get(name, name)
+            out = out.replace(f':{name_sql}', f"'{value}'")
 
         return out
 

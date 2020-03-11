@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Dict
 
 from ...base import ContribInspection
 
@@ -20,8 +21,13 @@ class IndexesBloated(_IndexHealthInspection):
     sql_name: str = 'bloated_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
-        'bloat_percentage_threshold': 50,
+        'schema': 'public',
+        'bloat_min': 50,
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+        'bloat_min': 'bloat_percentage_threshold',
     }
 
 
@@ -33,8 +39,13 @@ class IndexesDuplicated(_IndexHealthInspection):
     sql_name: str = 'duplicated_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
     }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
 
 
 class IndexesMissingForPk(_IndexHealthInspection):
@@ -45,7 +56,11 @@ class IndexesMissingForPk(_IndexHealthInspection):
     sql_name: str = 'foreign_keys_without_index'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -57,7 +72,11 @@ class IndexesWithNulls(_IndexHealthInspection):
     sql_name: str = 'indexes_with_null_values'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -69,7 +88,11 @@ class IndexesWithIntersections(_IndexHealthInspection):
     sql_name: str = 'intersected_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -81,7 +104,11 @@ class IndexesInvalid(_IndexHealthInspection):
     sql_name: str = 'invalid_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -93,7 +120,11 @@ class IndexesUnused(_IndexHealthInspection):
     sql_name: str = 'unused_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -105,8 +136,13 @@ class TablesBloated(_IndexHealthInspection):
     sql_name: str = 'bloated_tables'
 
     params: dict = {
-        'schema_name_param': 'public',
-        'bloat_percentage_threshold': 50,
+        'schema': 'public',
+        'bloat_min': 50,
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+        'bloat_min': 'bloat_percentage_threshold',
     }
 
 
@@ -118,7 +154,11 @@ class TablesMissingIndexes(_IndexHealthInspection):
     sql_name: str = 'tables_with_missing_indexes'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
 
 
@@ -130,5 +170,9 @@ class TablesMissingPk(_IndexHealthInspection):
     sql_name: str = 'tables_without_primary_key'
 
     params: dict = {
-        'schema_name_param': 'public',
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
     }
