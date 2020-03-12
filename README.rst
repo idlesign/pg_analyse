@@ -17,6 +17,9 @@ https://github.com/idlesign/pg_analyse
     :target: https://coveralls.io/r/idlesign/pg_analyse
 
 
+.. image:: https://github.com/idlesign/pg_analyse/blob/master/pg_analyse_cli.gif
+
+
 Description
 -----------
 
