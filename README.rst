@@ -101,7 +101,7 @@ CLI
     $ pg_analyse inspections
 
     ; Use DSN from the environment variable (see hint above),
-    ; print out human values (e.g. sizes) in human-friendly way:
+    ; print out complex values (e.g. sizes) in human-friendly way:
     $ pg_analyse run --human
 
     ; Run certain inspections, override default params
