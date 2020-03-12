@@ -40,12 +40,17 @@ Requirements
 ------------
 
 * Python 3.6+
+* psycopg 2
 
 
 Installation
 ------------
 
 .. code-block:: bash
+
+    ; If you do not have psycopg2 yet, install 
+    ; it as `psycopg2` or `psycopg2-binary`:
+    $ pip install psycopg2-binary
 
     ; If you want to use it just as Python module:
     $ pip install pg_analyse
