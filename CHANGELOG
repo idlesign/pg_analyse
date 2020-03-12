@@ -2,6 +2,11 @@ pg_analyse changelog
 ====================
 
 
+Unreleased
+----------
+* Fix. Repack with SQLs previously missing.
+
+
 v0.2.1 [2020-03-12]
 -------------------
 * CLI. Fixed 'run' command without --args option.
