@@ -2,6 +2,11 @@ pg_analyse changelog
 ====================
 
 
+Unreleased
+----------
+* Fix. Repack with SQLs previously missing.
+
+
 v0.2.0 [2020-03-11]
 -------------------
 + Added support to pass arguments to inspections.
