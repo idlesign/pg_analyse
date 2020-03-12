@@ -36,6 +36,7 @@ def entry_point():
 @click.option(
     '--args',
     help='Arguments to pass to inspections. E.g.: "idx_bloat:schema=my,bloat_min=20;idx_unused:schema=my"',
+    default=''
 )
 def run(dsn, fmt, one, human, args):
     """Run analysis."""

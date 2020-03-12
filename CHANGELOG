@@ -2,6 +2,11 @@ pg_analyse changelog
 ====================
 
 
+Unreleased
+----------
+* CLI. Fixed 'run' command without --args option.
+
+
 v0.2.0 [2020-03-11]
 -------------------
 + Added support to pass arguments to inspections.
