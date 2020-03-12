@@ -17,6 +17,9 @@ https://github.com/idlesign/pg_analyse
     :target: https://coveralls.io/r/idlesign/pg_analyse
 
 
+.. image:: https://github.com/idlesign/pg_analyse/blob/master/pg_analyse_cli.gif
+
+
 Description
 -----------
 
@@ -40,12 +43,17 @@ Requirements
 ------------
 
 * Python 3.6+
+* psycopg 2
 
 
 Installation
 ------------
 
 .. code-block:: bash
+
+    ; If you do not have psycopg2 yet, install it as `psycopg2` or `psycopg2-binary`. 
+    ; You may also want to install `envbox` to get PG connection settings from .env files.
+    $ pip install psycopg2-binary envbox
 
     ; If you want to use it just as Python module:
     $ pip install pg_analyse
@@ -93,7 +101,7 @@ CLI
     $ pg_analyse inspections
 
     ; Use DSN from the environment variable (see hint above),
-    ; print out human values (e.g. sizes) in human-friendly way:
+    ; print out complex values (e.g. sizes) in human-friendly way:
     $ pg_analyse run --human
 
     ; Run certain inspections, override default params
