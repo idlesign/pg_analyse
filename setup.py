@@ -16,6 +16,14 @@ except ImportError:
 PATH_BASE = os.path.dirname(__file__)
 
 
+def check_submodule():
+    if not os.path.exists(os.path.join(PATH_BASE, 'pg_analyse', 'sql', 'contrib', 'index_health', 'sql')):
+        raise Exception('Submodules not initialized. Use "$ git submodule update --init" after that retry.')
+
+
+check_submodule()
+
+
 def read_file(fpath):
     """Reads a file within package directories."""
     with io.open(os.path.join(PATH_BASE, fpath)) as f:
