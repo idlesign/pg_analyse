@@ -60,12 +60,16 @@ class Inspection:
     def get_sql(self) -> str:
         """Returns SQL ready to be executed."""
 
-        out = self._tpl_read()
+        # Here we replace ":var"-like param placeholders
+        # with "%(var)s"-like acceptable for psycopg2,
+        # escaping % with %%.
+
+        out = self._tpl_read().replace('%', '%%')
         aliases = self.params_aliases
 
         for name, value in self.arguments.items():
             name_sql = aliases.get(name, name)
-            out = out.replace(f':{name_sql}', f"'{value}'")
+            out = out.replace(f':{name_sql}', f'%({name})s')
 
         return out
 

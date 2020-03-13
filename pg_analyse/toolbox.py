@@ -32,10 +32,10 @@ class Analyser:
 
         self.dsn = dsn
 
-    def _sql_exec(self, *, connection, sql: str) -> InspectionResult:
+    def _sql_exec(self, *, connection, sql: str, params: dict) -> InspectionResult:
 
         with connection.cursor() as cursor:
-            cursor.execute(sql)
+            cursor.execute(sql, params)
             columns = [column.name for column in cursor.description]
             rows = cursor.fetchall()
 
@@ -68,7 +68,8 @@ class Analyser:
 
                     inspection.result = self._sql_exec(
                         connection=connection,
-                        sql=inspection.get_sql()
+                        sql=inspection.get_sql(),
+                        params=inspection.arguments,
                     )
 
                     results.append(inspection)
