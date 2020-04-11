@@ -33,7 +33,8 @@ Use it to gather information manually or in Continuous Integration.
 Can give you some information on:
 
 * Index health (bloat, duplicates, unused, etc.);
-* Tables missing PKs and indexes.
+* Tables missing PKs and indexes;
+* Slowest queries.
 
 
 .. note:: SQLs used for inspections are available in https://github.com/mfvanek/pg-index-health-sql
