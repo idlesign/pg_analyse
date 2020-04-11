@@ -175,3 +175,21 @@ class TablesMissingPk(_IndexHealthInspection):
     params_aliases: Dict[str, str] = {
         'schema': 'schema_name_param',
     }
+
+
+class QueriesSlowest(_IndexHealthInspection):
+    """Reveals slowest queries. Requires the pg_stat_statement extension"""
+
+    title: str = 'Slowest queries'
+    alias: str = 'q_slowest'
+
+    sql_dir: Path = _IndexHealthInspection.sql_dir / 'ext'
+    sql_name: str = 'slowest_queries_by_total_execution_time'
+
+    params: dict = {
+        'count': 10,
+    }
+
+    params_aliases: Dict[str, str] = {
+        'count': 'limit_count',
+    }

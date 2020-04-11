@@ -5,6 +5,8 @@ pg_analyse changelog
 Unreleased
 ----------
 + Added exception handling.
++ Added Slowest queries [q_slowest] inspection.
+* Updated `index_health` contrib.
 
 
 v0.3.0 [2020-03-13]
