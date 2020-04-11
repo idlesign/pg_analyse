@@ -1,6 +1,7 @@
 import json
 import math
 from typing import Type, Dict, List
+from textwrap import indent
 
 if False:  # pragma: nocover
     from .toolbox import Inspection
@@ -103,17 +104,17 @@ class TableFormatter(Formatter):
             column.replace('_', ' ').capitalize()
             for column in getattr(inspection.result, 'columns', [])]
 
-        line = (
-            f'{inspection.title} [{inspection.alias}]\n\n'
-            f'{tabulate(self._get_rows_processed(), headers=columns)}'
-        )
+        lines = []
 
         errors = inspection.errors
 
         if errors:
-            line = line + '\n'.join(errors)
+            lines.append('\n'.join(errors))
 
-        return line
+        else:
+            lines.append(f'{tabulate(self._get_rows_processed(), headers=columns)}')
+
+        return f'{inspection.title} [{inspection.alias}]\n\n' + indent('\n'.join(lines), '  ')
 
     @classmethod
     def wrap(cls, lines: List[str]) -> str:

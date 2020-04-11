@@ -6,6 +6,7 @@ Unreleased
 ----------
 + Added exception handling.
 + Added Slowest queries [q_slowest] inspection.
++ CLI. Added indent to inspection tables.
 * Updated `index_health` contrib.
 
 
