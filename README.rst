@@ -110,6 +110,8 @@ CLI
 
     ; Use explicitly passed DSN:
     $ pg_analyse run --dsn "host=myhost.net port=6432 user=test password=xxx sslmode=verify-full sslrootcert=/home/my.pem"
+    ; Local connection as `postgres` user with password:
+    $ pg_analyse run --dsn "host=127.0.0.1 user=postgres password=yourpass"
 
     ; Output analysis result as json (instead of tables):
     $ pg_analyse run --fmt json
