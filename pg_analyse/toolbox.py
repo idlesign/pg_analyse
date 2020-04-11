@@ -66,11 +66,16 @@ class Analyser:
 
                     inspection = inspection_cls(args=arguments.get(alias))
 
-                    inspection.result = self._sql_exec(
-                        connection=connection,
-                        sql=inspection.get_sql(),
-                        params=inspection.arguments,
-                    )
+                    try:
+
+                        inspection.result = self._sql_exec(
+                            connection=connection,
+                            sql=inspection.get_sql(),
+                            params=inspection.arguments,
+                        )
+
+                    except Exception as e:
+                        inspection.errors.append(f'{e}')
 
                     results.append(inspection)
 

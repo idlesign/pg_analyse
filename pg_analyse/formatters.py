@@ -50,12 +50,17 @@ class Formatter:
 
         return '%s %s' % (size, names[name_idx])
 
-    def _get_rows_processed(self):
+    def _get_rows_processed(self) -> list:
+
+        result = self.inspection.result
+
+        if not result:
+            return []
 
         column_casters = []
         human = self.human
 
-        for name in self.inspection.result.columns:
+        for name in result.columns:
             func = lambda value: value
 
             if human and 'size' in name:
@@ -65,7 +70,7 @@ class Formatter:
 
         out = []
 
-        for row in self.inspection.result.rows:
+        for row in result.rows:
             out.append([column_casters[idx](chunk) for idx, chunk in enumerate(row)])
 
         return out
@@ -96,12 +101,17 @@ class TableFormatter(Formatter):
 
         columns = [
             column.replace('_', ' ').capitalize()
-            for column in inspection.result.columns]
+            for column in getattr(inspection.result, 'columns', [])]
 
         line = (
             f'{inspection.title} [{inspection.alias}]\n\n'
             f'{tabulate(self._get_rows_processed(), headers=columns)}'
         )
+
+        errors = inspection.errors
+
+        if errors:
+            line = line + '\n'.join(errors)
 
         return line
 
@@ -122,9 +132,10 @@ class JsonFormatter(Formatter):
             'title': inspection.title,
             'alias': inspection.alias,
             'arguments': inspection.arguments,
+            'errors': inspection.errors,
             'result': {
                 'rows': self._get_rows_processed(),
-                'columns': inspection.result.columns,
+                'columns': getattr(inspection.result, 'columns', []),
             },
         }
 

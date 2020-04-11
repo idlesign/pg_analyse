@@ -42,9 +42,27 @@ def test_analyse_and_format(mock_pg):
 
     assert out == [
         {'title': 'Bloating indexes', 'alias': 'idx_bloat',
-         'arguments': {'schema': 'public', 'bloat_min': '70'},
+         'arguments': {'schema': 'public', 'bloat_min': '70'}, 'errors': [],
          'result': {'rows': [['117.74 MB', '0 B']], 'columns': ['some_size', 'size']}
          },
         {'title': 'Unused indexes', 'alias': 'idx_unused',
-         'arguments': {'schema': 'public'},
+         'arguments': {'schema': 'public'}, 'errors': [],
          'result': {'rows': [['117.74 MB', '0 B']], 'columns': ['some_size', 'size']}}]
+
+
+def test_exceptions(mock_pg):
+
+    mock_pg([], [], exception='bang!')
+
+    environ[ENV_VAR] = 'host=localhost user=postgres password=postgres'
+
+    out = analyse_and_format()
+    assert 'bang!' in out
+
+    out = analyse_and_format(fmt='json', only=['idx_unused'],)
+    out = json.loads(out)
+    assert out == [{
+        'title': 'Unused indexes', 'alias': 'idx_unused',
+        'arguments': {'schema': 'public'},
+        'errors': ['bang!'], 'result': {'rows': [], 'columns': []}}]
+

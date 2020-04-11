@@ -5,9 +5,10 @@ import pytest
 
 class PgMock:
 
-    def __init__(self, columns, rows):
+    def __init__(self, columns, rows, *, exception=None):
         self.columns = columns
         self.rows = rows
+        self.exception = exception
 
     @property
     def description(self):
@@ -24,6 +25,9 @@ class PgMock:
         return self
 
     def execute(self, *args, **kwargs):
+        exception = self.exception
+        if exception:
+            raise ValueError(exception)
         return
 
     def __enter__(self):
@@ -36,8 +40,8 @@ class PgMock:
 @pytest.fixture
 def mock_pg(monkeypatch):
 
-    def mock_pg_(columns, rows):
-        mock_ = PgMock(columns, rows)
+    def mock_pg_(columns, rows, *, exception=None):
+        mock_ = PgMock(columns, rows, exception=exception)
         monkeypatch.setattr('pg_analyse.toolbox.psycopg2', mock_)
         return mock_
 

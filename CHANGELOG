@@ -2,6 +2,11 @@ pg_analyse changelog
 ====================
 
 
+Unreleased
+----------
++ Added exception handling.
+
+
 v0.3.0 [2020-03-13]
 -------------------
 + Added basic protection from SQL-injections.

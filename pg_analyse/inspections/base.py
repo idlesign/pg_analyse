@@ -45,6 +45,9 @@ class Inspection:
         self.arguments = {**self.params, **(args or {})}
         """User supplied arguments to replace defaults."""
 
+        self.errors: List[str] = []
+        """Inspection errors description."""
+
         self.result: Optional[InspectionResult] = None
         """Inspection run result. Populated runtime."""
 
@@ -52,9 +55,13 @@ class Inspection:
         """Returns SQL directory."""
         return self.sql_dir
 
+    def get_sql_path(self) -> str:
+        """Returns executed SQL path."""
+        return str(self._get_sql_dir() / f'{self.sql_name}.sql')
+
     def _tpl_read(self) -> str:
         """Reads from filesystem SQL template and returns it."""
-        with open(str(self._get_sql_dir() / f'{self.sql_name}.sql')) as f:
+        with open(self.get_sql_path()) as f:
             return f.read()
 
     def get_sql(self) -> str:
