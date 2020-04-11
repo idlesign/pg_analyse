@@ -1,3 +1,4 @@
 [submodule "pg_analyse/sql/contrib/index_health"]
 	path = pg_analyse/sql/contrib/index_health
 	url = https://github.com/mfvanek/pg-index-health-sql.git
+	update = merge
