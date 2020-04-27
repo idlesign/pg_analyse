@@ -5,6 +5,7 @@ pg_analyse changelog
 Unreleased
 ----------
 + Now supported passing common inspections params (see #2).
+* Fixed wrong detection of Duplicated indexes with different collations.
 
 
 v0.4.0 [2020-04-11]
