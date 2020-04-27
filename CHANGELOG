@@ -2,6 +2,11 @@ pg_analyse changelog
 ====================
 
 
+Unreleased
+----------
++ Now supported passing common inspections params (see #2).
+
+
 v0.4.0 [2020-04-11]
 -------------------
 + Added exception handling.

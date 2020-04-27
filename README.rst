@@ -106,8 +106,9 @@ CLI
     ; print out complex values (e.g. sizes) in human-friendly way:
     $ pg_analyse run --human
 
-    ; Run certain inspections, override default params
-    $ pg_analyse run --one idx_unused --one idx_bloat --args "idx_bloat:schema=my,bloat_min=20;idx_unused:schema=my"
+    ; Run certain inspections, override default params.
+    ; Use "common" keyword to pass params common for all inspections.
+    $ pg_analyse run --one idx_unused --one idx_bloat --args "idx_bloat:schema=my,bloat_min=20;common:schema=my"
 
     ; Use explicitly passed DSN:
     $ pg_analyse run --dsn "host=myhost.net port=6432 user=test password=xxx sslmode=verify-full sslrootcert=/home/my.pem"

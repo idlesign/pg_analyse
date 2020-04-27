@@ -48,13 +48,19 @@ class Analyser:
             If not set all inspections are run.
 
         :param arguments: Arguments to pass to inspections.
+            Pseudo-inspection alias "common" can be used to pass params common for all inspections.
 
-            Example: {'insp_alias': {'param1': 'value', 'param2': 'value'}}
+            Example:
+                {
+                'insp_alias': {'param1': 'value', 'param2': 'value'},
+                'common': {'schema': 'nonpublic'},
+                }
 
         """
         results = []
         only = set(only or [])
         arguments = arguments or {}
+        arguments_common = arguments.get('common', {})
 
         with psycopg2.connect(self.dsn) as connection:
 
@@ -64,7 +70,10 @@ class Analyser:
 
                 if not only or alias in only:
 
-                    inspection = inspection_cls(args=arguments.get(alias))
+                    inspection = inspection_cls(args={
+                        **arguments_common,
+                        **arguments.get(alias, {}),
+                    } or None)
 
                     try:
 
@@ -102,8 +111,13 @@ def analyse_and_format(
     :param human: Use human friendly values formatting (e.g. sizes).
 
     :param arguments: Arguments to pass to inspections.
+            Pseudo-inspection alias "common" can be used to pass params common for all inspections.
 
-        Example: {'insp_alias': {'param1': 'value', 'param2': 'value'}}
+            Example:
+                {
+                'insp_alias': {'param1': 'value', 'param2': 'value'},
+                'common': {'schema': 'nonpublic'},
+                }
 
     """
     analyser = Analyser(dsn=dsn)
@@ -123,7 +137,7 @@ def analyse_and_format(
 def parse_args_string(val: str) -> TypeInspectionsArgs:
     """Parses inspections args string into a dict.
 
-    :param val: E.g.: idx_bloat:schema=my,bloat_min=20;idx_unused:schema=my
+    :param val: E.g.: idx_bloat:schema=my,bloat_min=20;common:schema=my
 
     """
     out = {}

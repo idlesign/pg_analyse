@@ -50,6 +50,27 @@ def test_analyse_and_format(mock_pg):
          'result': {'rows': [['117.74 MB', '0 B']], 'columns': ['some_size', 'size']}}]
 
 
+def test_common_params(mock_pg):
+
+    mock_pg(
+        ['some_size', 'size'], [
+            [123456789, 0],
+        ])
+
+    out = analyse_and_format(
+        fmt='json',
+        human=True,
+        only=['idx_unused', 'idx_bloat'],
+        arguments={'idx_bloat': {'bloat_min': '70', 'schema': 'overridden'}, 'common': {'schema': 'shared'}}
+    )
+    out = json.loads(out)
+    assert out == [
+        {'title': 'Bloating indexes', 'alias': 'idx_bloat', 'arguments': {'schema': 'overridden', 'bloat_min': '70'},
+         'errors': [], 'result': {'rows': [['117.74 MB', '0 B']], 'columns': ['some_size', 'size']}},
+        {'title': 'Unused indexes', 'alias': 'idx_unused', 'arguments': {'schema': 'shared'}, 'errors': [],
+         'result': {'rows': [['117.74 MB', '0 B']], 'columns': ['some_size', 'size']}}]
+
+
 def test_exceptions(mock_pg):
 
     mock_pg([], [], exception='bang!')
