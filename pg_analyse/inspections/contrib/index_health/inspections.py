@@ -13,6 +13,24 @@ class _IndexHealthInspection(ContribInspection):
     sql_dir: Path = ContribInspection.sql_dir / 'index_health' / 'sql'
 
 
+class SeqOverflow(_IndexHealthInspection):
+    """Reveals sequences exhaustion."""
+
+    title: str = 'Sequences exhaustion'
+    alias: str = 'seq_exh'
+    sql_name: str = 'sequence_overflow'
+
+    params: dict = {
+        'schema': 'public',
+        'left_min': 20,
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+        'left_min': 'remaining_percentage_threshold',
+    }
+
+
 class IndexesBloated(_IndexHealthInspection):
     """Reveals bloated indexes."""
 
@@ -63,11 +81,44 @@ class IndexesMissingForPk(_IndexHealthInspection):
     }
 
 
+class IndexesBtreeArray(_IndexHealthInspection):
+    """Reveal B-Tree indexes on array columns."""
+
+    title: str = 'B-Tree indexes on array columns'
+    alias: str = 'idx_btree_arr'
+    sql_name: str = 'btree_indexes_on_array_columns'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
 class IndexesWithNulls(_IndexHealthInspection):
     """Reveals indexes with NULL values."""
 
     title: str = 'Indexes with NULLs'
     alias: str = 'idx_nulls'
+    sql_name: str = 'indexes_with_null_values'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+
+class IndexesBoolean(_IndexHealthInspection):
+    """Reveals indexes on boolean."""
+
+    title: str = 'Indexes on Boolean'
+    alias: str = 'idx_bool'
     sql_name: str = 'indexes_with_null_values'
 
     params: dict = {
@@ -127,6 +178,22 @@ class IndexesUnused(_IndexHealthInspection):
     }
 
 
+class ConstraintsInvalid(_IndexHealthInspection):
+    """Reveal not valid constraints."""
+
+    title: str = 'Not valid constraints'
+    alias: str = 'constr_invalid'
+    sql_name: str = 'check_not_valid_constraints'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
 class TablesBloated(_IndexHealthInspection):
     """Reveals bloated tables."""
 
@@ -167,6 +234,38 @@ class TablesMissingPk(_IndexHealthInspection):
     title: str = 'Tables without Primary Key'
     alias: str = 'tbl_nopk'
     sql_name: str = 'tables_without_primary_key'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class ColumnsJson(_IndexHealthInspection):
+    """Reveals columns using JSON type (jsonb advised)."""
+
+    title: str = 'Colums using JSON type'
+    alias: str = 'col_json'
+    sql_name: str = 'columns_with_json_type'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class ColumnsSerialPrimary(_IndexHealthInspection):
+    """Reveals columns using serial types but non-primary or primary+foreign."""
+
+    title: str = 'Serial types in relation to primary key'
+    alias: str = 'col_serial'
+    sql_name: str = 'non_primary_key_columns_with_serial_types'
 
     params: dict = {
         'schema': 'public',
