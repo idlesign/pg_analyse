@@ -1,6 +1,10 @@
 from typing import List, Union, Set, Dict
 
-import psycopg
+try:
+    import psycopg
+
+except ImportError:
+    import psycopg2 as psycopg
 
 from .formatters import Formatter, TableFormatter
 from .inspections import Inspection, InspectionResult

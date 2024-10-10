@@ -10,7 +10,12 @@ try:
     install_requires = []
 
 except ImportError:
-    install_requires = ['psycopg[binary]']  # To not to build on install.
+
+    try:
+        import psycopg2 as psycopg
+        install_requires = []
+    except ImportError:
+        install_requires = ['psycopg2']  # To not to build on install.
 
 
 PATH_BASE = os.path.dirname(__file__)
