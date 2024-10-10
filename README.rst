@@ -44,7 +44,7 @@ Requirements
 ------------
 
 * Python 3.6+
-* psycopg 2
+* psycopg 3
 
 
 Installation
@@ -52,7 +52,7 @@ Installation
 
 .. code-block:: bash
 
-    ; If you do not have psycopg2 yet, install it as `psycopg2` or `psycopg2-binary`. 
+    ; If you do not have psycopg3 yet, install it as `psycopg` or `psycopg[binary]`.
     ; You may also want to install `envbox` to get PG connection settings from .env files.
     ; Your distribution may require issuing `pip3` command instead of plain `pip`.
     $ pip install psycopg2-binary envbox

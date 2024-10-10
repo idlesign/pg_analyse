@@ -1,6 +1,6 @@
 from typing import List, Union, Set, Dict
 
-import psycopg2
+import psycopg
 
 from .formatters import Formatter, TableFormatter
 from .inspections import Inspection, InspectionResult
@@ -62,7 +62,7 @@ class Analyser:
         arguments = arguments or {}
         arguments_common = arguments.get('common', {})
 
-        with psycopg2.connect(self.dsn) as connection:
+        with psycopg.connect(self.dsn) as connection:
 
             for inspection_cls in Inspection.inspections_all:
 
