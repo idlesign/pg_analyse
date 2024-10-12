@@ -55,7 +55,7 @@ Installation
     ; If you do not have psycopg3 yet, install it as `psycopg` or `psycopg[binary]`.
     ; You may also want to install `envbox` to get PG connection settings from .env files.
     ; Your distribution may require issuing `pip3` command instead of plain `pip`.
-    $ pip install psycopg2-binary envbox
+    $ pip install psycopg[binary] envbox
 
     ; If you want to use it just as Python module:
     $ pip install pg_analyse
