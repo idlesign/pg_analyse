@@ -42,7 +42,7 @@ def mock_pg(monkeypatch):
 
     def mock_pg_(columns, rows, *, exception=None):
         mock_ = PgMock(columns, rows, exception=exception)
-        monkeypatch.setattr('pg_analyse.toolbox.psycopg2', mock_)
+        monkeypatch.setattr('pg_analyse.toolbox.psycopg', mock_)
         return mock_
 
     return mock_pg_

@@ -6,11 +6,16 @@ import sys
 from setuptools import setup, find_packages
 
 try:
-    import psycopg2
+    import psycopg
     install_requires = []
 
 except ImportError:
-    install_requires = ['psycopg2-binary']  # To not to build on install.
+
+    try:
+        import psycopg2 as psycopg
+        install_requires = []
+    except ImportError:
+        install_requires = ['psycopg2']  # To not to build on install.
 
 
 PATH_BASE = os.path.dirname(__file__)
