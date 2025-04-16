@@ -24,7 +24,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install deps
       run: |
-        python -m pip install setuptools pytest coverage coveralls psycopg[binary]
+        python -m pip install setuptools pytest coverage coveralls psycopg[binary] tabulate
         git submodule update --init
     - name: Run tests
       env:

@@ -77,13 +77,6 @@ setup(
 
     python_requires='>=3.10',
 
-    test_suite='tests',
-
-    tests_require=[
-        'pytest',
-        'tabulate',
-    ],
-
     classifiers=[
         # As in https://pypi.python.org/pypi?:action=list_classifiers
         'Development Status :: 4 - Beta',
