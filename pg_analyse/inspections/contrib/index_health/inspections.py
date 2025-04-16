@@ -65,7 +65,7 @@ class IndexesDuplicated(_IndexHealthInspection):
     }
 
 
-class IndexesMissingForPk(_IndexHealthInspection):
+class IndexesMissingForFk(_IndexHealthInspection):
     """Reveals foreign keys without indexes."""
 
     title: str = 'Foreign keys without indexes'
@@ -113,13 +113,12 @@ class IndexesWithNulls(_IndexHealthInspection):
     }
 
 
-
 class IndexesBoolean(_IndexHealthInspection):
     """Reveals indexes on boolean."""
 
     title: str = 'Indexes on Boolean'
     alias: str = 'idx_bool'
-    sql_name: str = 'indexes_with_null_values'
+    sql_name: str = 'indexes_with_boolean'
 
     params: dict = {
         'schema': 'public',
@@ -183,7 +182,7 @@ class ConstraintsInvalid(_IndexHealthInspection):
 
     title: str = 'Not valid constraints'
     alias: str = 'constr_invalid'
-    sql_name: str = 'check_not_valid_constraints'
+    sql_name: str = 'not_valid_constraints'
 
     params: dict = {
         'schema': 'public',
@@ -247,7 +246,7 @@ class TablesMissingPk(_IndexHealthInspection):
 class ColumnsJson(_IndexHealthInspection):
     """Reveals columns using JSON type (jsonb advised)."""
 
-    title: str = 'Colums using JSON type'
+    title: str = 'Columns using JSON type'
     alias: str = 'col_json'
     sql_name: str = 'columns_with_json_type'
 
@@ -265,7 +264,73 @@ class ColumnsSerialPrimary(_IndexHealthInspection):
 
     title: str = 'Serial types in relation to primary key'
     alias: str = 'col_serial'
-    sql_name: str = 'non_primary_key_columns_with_serial_types'
+    sql_name: str = 'columns_with_serial_types'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class ColumnsUnconventionalNames(_IndexHealthInspection):
+    """Reveals columns that have to be enclosed in double-quotes due
+    to not following naming conventions."""
+
+    title: str = 'Columns with unconventional names'
+    alias: str = 'col_unconv'
+    sql_name: str = 'columns_not_following_naming_convention'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class FkDuplicated(_IndexHealthInspection):
+    """Reveals duplicated foreign keys."""
+
+    title: str = 'FK duplicated'
+    alias: str = 'fk_dub'
+    sql_name: str = 'duplicated_foreign_keys'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class FkUnmatchedType(_IndexHealthInspection):
+    """Reveals foreign keys with the constrained column type not matching
+    the type in the referenced table."""
+
+    title: str = 'FK unmatched types'
+    alias: str = 'fk_typematch'
+    sql_name: str = 'foreign_keys_with_unmatched_column_type'
+
+    params: dict = {
+        'schema': 'public',
+    }
+
+    params_aliases: Dict[str, str] = {
+        'schema': 'schema_name_param',
+    }
+
+
+class FkIntersecting(_IndexHealthInspection):
+    """Reveals foreign keys with overlapping sets of columns."""
+
+    title: str = 'FK intersected'
+    alias: str = 'fk_isect'
+    sql_name: str = 'intersected_foreign_keys'
 
     params: dict = {
         'schema': 'public',
