@@ -23,7 +23,7 @@ PATH_BASE = os.path.dirname(__file__)
 
 def check_submodule():
     if not os.path.exists(os.path.join(PATH_BASE, 'pg_analyse', 'sql', 'contrib', 'index_health', 'sql')):
-        raise Exception('Submodules not initialized. Use "$ git submodule update --init" after that retry.')
+        raise Exception('Submodules not initialized. Use "$ git submodule update --init" and retry.')
 
 
 check_submodule()
@@ -75,7 +75,7 @@ setup(
         'console_scripts': ['pg_analyse = pg_analyse.cli:main'],
     },
 
-    python_requires='>=3.6',
+    python_requires='>=3.10',
 
     test_suite='tests',
 
@@ -90,9 +90,8 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
         'License :: OSI Approved :: BSD License'
     ],
 )
