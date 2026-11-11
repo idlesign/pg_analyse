@@ -1,10 +1,14 @@
 from collections import namedtuple
 from pathlib import Path
-from typing import List, Type, Optional, Dict
+from typing import List, Type, Dict
+
+from typing import NamedTuple
 
 from ..settings import DIR_SQL
 
-InspectionResult = namedtuple('InspectionResult', ['columns', 'rows'])
+class InspectionResult(NamedTuple):
+    columns: list
+    rows: list
 
 
 class Inspection:
@@ -36,7 +40,7 @@ class Inspection:
         if cls.alias:
             cls.inspections_all.append(cls)
 
-    def __init__(self, *, args: Dict[str, str] = None):
+    def __init__(self, *, args: Dict[str, str] | None = None):
 
         self.title = self.title or self.alias
 
@@ -48,7 +52,7 @@ class Inspection:
         self.errors: List[str] = []
         """Inspection errors description."""
 
-        self.result: Optional[InspectionResult] = None
+        self.result: InspectionResult | None = None
         """Inspection run result. Populated runtime."""
 
     def _get_sql_dir(self) -> Path:
@@ -61,7 +65,7 @@ class Inspection:
 
     def _tpl_read(self) -> str:
         """Reads from filesystem SQL template and returns it."""
-        with open(self.get_sql_path()) as f:
+        with Path(self.get_sql_path()).open() as f:
             return f.read()
 
     def get_sql(self) -> str:
@@ -74,7 +78,7 @@ class Inspection:
         out = self._tpl_read().replace('%', '%%')
         aliases = self.params_aliases
 
-        for name, value in self.arguments.items():
+        for name in self.arguments:
             name_sql = aliases.get(name, name)
             out = out.replace(f':{name_sql}', f'%({name})s')
 

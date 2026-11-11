@@ -1,17 +1,16 @@
-#!/usr/bin/env python
 from functools import partial
 from textwrap import wrap, indent
 
 import click
 
-from pg_analyse import VERSION_STR
+from pg_analyse import VERSION
 from pg_analyse.formatters import Formatter
 from pg_analyse.inspections.base import Inspection
 from pg_analyse.toolbox import analyse_and_format, parse_args_string
 
 
 @click.group()
-@click.version_option(version=VERSION_STR)
+@click.version_option(version=VERSION)
 def entry_point():
     """pg_analyse allows you to run various ."""
 

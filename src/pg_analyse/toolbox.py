@@ -130,10 +130,7 @@ def analyse_and_format(
     fmt = fmt or TableFormatter.alias
     formatter_cls = Formatter.formatters_all[fmt]
 
-    out = []
-
-    for inspection in inspections:
-        out.append(formatter_cls(inspection, human=human).run())
+    out = [formatter_cls(inspection, human=human).run() for inspection in inspections]
 
     return formatter_cls.wrap(out)
 

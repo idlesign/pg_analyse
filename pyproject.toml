@@ -1,0 +1,85 @@
+[project]
+name = "pg_analyse"
+dynamic = ["version"]
+description = "Tools to gather useful information from PostgreSQL"
+authors = [
+    { name = "Igor Starikov", email = "idlesign@yandex.ru" },
+]
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+keywords = ["postgresql", "index", "analyse"]
+dependencies = [
+    "psycopg[binary]",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: BSD License",
+]
+
+[project.urls]
+Homepage = "https://github.com/idlesign/pg_analyse"
+
+[project.scripts]
+pg_analyse = "pg_analyse.cli:main"
+
+[project.optional-dependencies]
+cli = [
+    "click",
+    "tabulate",
+]
+
+[dependency-groups]
+dev = [
+    { include-group = "docs" },
+    { include-group = "linters" },
+    { include-group = "tests" },
+]
+docs = [
+    "mkdocs-apidescribed-plugin",
+    "mkdocs-material",
+    "mkdocs-navsorted-plugin",
+]
+linters = [
+    "ruff==0.13.1",
+]
+tests = [
+    "coverage",
+    "pytest",
+    "tabulate",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/pg_analyse/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pg_analyse"]
+
+[tool.hatch.build.targets.sdist]
+packages = ["src/"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = [
+    "src/pg_analyse",
+]
+
+[tool.makeapp.tests]
+deps = []

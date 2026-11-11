@@ -1,10 +1,7 @@
-pg_analyse authors
-==================
+# pg_analyse authors
 
 Created by Igor `idle sign` Starikov.
 
+## Contributors
 
-Contributors
-------------
-
-lospejos <https://github.com/lospejos>
+* lospejos <https://github.com/lospejos>

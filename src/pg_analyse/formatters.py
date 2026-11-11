@@ -46,10 +46,10 @@ class Formatter:
 
         names = ('B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
 
-        name_idx = int(math.floor(math.log(bytes_size, 1024)))
+        name_idx = math.floor(math.log(bytes_size, 1024))
         size = round(bytes_size / math.pow(1024, name_idx), 2)
 
-        return '%s %s' % (size, names[name_idx])
+        return f'{size} {names[name_idx]}'
 
     def _get_rows_processed(self) -> list:
 
@@ -62,17 +62,19 @@ class Formatter:
         human = self.human
 
         for name in result.columns:
-            func = lambda value: value
-
             if human and 'size' in name:
                 func = self.humanize_size
 
+            else:
+                def func(value):
+                    return value
+
             column_casters.append(func)
 
-        out = []
-
-        for row in result.rows:
-            out.append([column_casters[idx](chunk) for idx, chunk in enumerate(row)])
+        out = [
+            [column_casters[idx](chunk) for idx, chunk in enumerate(row)]
+            for row in result.rows
+        ]
 
         return out
 

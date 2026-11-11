@@ -1,41 +1,26 @@
-pg_analyse changelog
-====================
+# pg_analyse changelog
 
+### v0.5.0 [2020-04-28]
+* ++ Now supported passing common inspections params (see #2).
+* ** Fixed wrong detection of Duplicated indexes with different collations.
 
-v0.5.0 [2020-04-28]
--------------------
-+ Now supported passing common inspections params (see #2).
-* Fixed wrong detection of Duplicated indexes with different collations.
+### v0.4.0 [2020-04-11]
+* ++ Added exception handling.
+* ++ Added Slowest queries [q_slowest] inspection.
+* ++ CLI. Added indent to inspection tables.
+* ** Updated `index_health` contrib.
 
+### v0.3.0 [2020-03-13]
+* ++ Added basic protection from SQL-injections.
 
-v0.4.0 [2020-04-11]
--------------------
-+ Added exception handling.
-+ Added Slowest queries [q_slowest] inspection.
-+ CLI. Added indent to inspection tables.
-* Updated `index_health` contrib.
+### v0.2.2 [2020-03-12]
+* ** Fix. Repack with SQLs previously missing.
 
+### v0.2.1 [2020-03-12]
+* ** CLI. Fixed 'run' command without --args option.
 
-v0.3.0 [2020-03-13]
--------------------
-+ Added basic protection from SQL-injections.
+### v0.2.0 [2020-03-11]
+* ++ Added support to pass arguments to inspections.
 
-
-v0.2.2 [2020-03-12]
--------------------
-* Fix. Repack with SQLs previously missing.
-
-
-v0.2.1 [2020-03-12]
--------------------
-* CLI. Fixed 'run' command without --args option.
-
-
-v0.2.0 [2020-03-11]
--------------------
-+ Added support to pass arguments to inspections.
-
-
-v0.1.0 [2020-03-10]
--------------------
-+ Basic functionality.
+### v0.1.0 [2020-03-10]
+* ++ Basic functionality.

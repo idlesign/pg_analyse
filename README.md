@@ -1,29 +1,19 @@
-pg_analyse
-==========
-https://github.com/idlesign/pg_analyse
+# pg_analyse
 
-|release| |lic| |coverage|
+<https://github.com/idlesign/pg_analyse>
 
-.. |release| image:: https://img.shields.io/pypi/v/pg_analyse.svg
-    :target: https://pypi.python.org/pypi/pg_analyse
+[![release](https://img.shields.io/pypi/v/pg_analyse.svg)](https://pypi.python.org/pypi/pg_analyse)
+[![lic](https://img.shields.io/pypi/l/pg_analyse.svg)](https://pypi.python.org/pypi/pg_analyse)
+[![coverage](https://img.shields.io/coveralls/idlesign/pg_analyse/master.svg)](https://coveralls.io/r/idlesign/pg_analyse)
 
-.. |lic| image:: https://img.shields.io/pypi/l/pg_analyse.svg
-    :target: https://pypi.python.org/pypi/pg_analyse
+![pg_analyse CLI](https://github.com/idlesign/pg_analyse/blob/master/pg_analyse_cli.gif)
 
-.. |coverage| image:: https://img.shields.io/coveralls/idlesign/pg_analyse/master.svg
-    :target: https://coveralls.io/r/idlesign/pg_analyse
-
-
-.. image:: https://github.com/idlesign/pg_analyse/blob/master/pg_analyse_cli.gif
-
-
-Description
------------
+## Description
 
 *Tools to gather useful information from PostgreSQL*
 
 This package can function both as Python module and as a command line utility.
-Command line interface can show gathered information in the form of tables or ``JSON``.
+Command line interface can show gathered information in the form of tables or `JSON`.
 
 Use it to gather information manually or in Continuous Integration.
 
@@ -33,93 +23,80 @@ Can give you some information on:
 * Tables missing PKs and indexes;
 * Slowest queries.
 
+!!! note
 
-.. note:: SQLs used for inspections are available in https://github.com/mfvanek/pg-index-health-sql
+    SQLs used for inspections are available at <https://github.com/mfvanek/pg-index-health-sql>
 
-
-Requirements
-------------
+## Requirements
 
 * Python 3.10+
 * psycopg 3
 
+## Installation
 
-Installation
-------------
+```shell
+# If you do not have psycopg3 yet, install it as `psycopg` or `psycopg[binary]`.
+# You may also want to install `envbox` to get PG connection settings from .env files.
+$ pip install psycopg[binary] envbox
 
-.. code-block:: bash
+# If you want to use it just as Python module:
+$ pip install pg_analyse
 
-    ; If you do not have psycopg3 yet, install it as `psycopg` or `psycopg[binary]`.
-    ; You may also want to install `envbox` to get PG connection settings from .env files.
-    ; Your distribution may require issuing `pip3` command instead of plain `pip`.
-    $ pip install psycopg[binary] envbox
+# If you want to use it from command line:
+$ pip install pg_analyse[cli]
+```
 
-    ; If you want to use it just as Python module:
-    $ pip install pg_analyse
+## Usage
 
-    ; If you want to use it from command line:
-    $ pip install pg_analyse[cli]
+### Hint
 
+One can set `PG_ANALYSE_DSN` environment variable instead of explicitly passing DSN
+to connect to PostgreSQL. If [envbox](https://pypi.org/project/envbox/) is installed this
+variable can be defined in `.env` file.
 
-Usage
------
+### Python module
 
-Hint
-~~~~
+```python
+from pg_analyse.toolbox import Analyser, analyse_and_format
 
-One can set ``PG_ANALYSE_DSN`` environment variable instead of explicitly passing DSN
-to connect to PostgreSQL. If `envbox <https://pypi.org/project/envbox/>`_ is installed this
-variable can be defined in ``.env`` file .
+analyser = Analyser(dsn='user=test')
 
-Python module
-~~~~~~~~~~~~~
+inspections = analyser.run()
+inspection = inspections[0]
 
+print(inspection.alias)
+print(inspection.result)
 
-.. code-block:: python
+# Shortcut function is available:
+out = analyse_and_format()
+```
 
-    from pg_analyse.toolbox import Analyser, analyse_and_format
+### CLI
 
-    analyser = Analyser(dsn='user=test')
+```shell
+# Show known inspections and descriptions:
+$ pg_analyse inspections
 
-    inspections = analyser.run()
-    inspection = inspections[0]
+# Use DSN from the environment variable (see hint above),
+# print out complex values (e.g. sizes) in human-friendly way:
+$ pg_analyse run --human
 
-    print(inspection.alias)
-    print(inspection.result)
+# Run certain inspections, override default params.
+# Use "common" keyword to pass params common for all inspections.
+$ pg_analyse run --one idx_unused --one idx_bloat --args "idx_bloat:schema=my,bloat_min=20;common:schema=my"
 
-    # Shortcut function is available:
-    out = analyse_and_format()
+# Use explicitly passed DSN:
+$ pg_analyse run --dsn "host=myhost.net port=6432 user=test password=xxx sslmode=verify-full sslrootcert=/home/my.pem"
+# Local connection as `postgres` user with password:
+$ pg_analyse run --dsn "host=127.0.0.1 user=postgres password=yourpass"
 
+# Output analysis result as json (instead of tables):
+$ pg_analyse run --fmt json
+```
 
-CLI
-~~~
+## Adding Inspections
 
-.. code-block:: bash
+To add a new inspection to `pg_analyse`:
 
-    ; Show known inspections and descriptions:
-    $ pg_analyse inspections
-
-    ; Use DSN from the environment variable (see hint above),
-    ; print out complex values (e.g. sizes) in human-friendly way:
-    $ pg_analyse run --human
-
-    ; Run certain inspections, override default params.
-    ; Use "common" keyword to pass params common for all inspections.
-    $ pg_analyse run --one idx_unused --one idx_bloat --args "idx_bloat:schema=my,bloat_min=20;common:schema=my"
-
-    ; Use explicitly passed DSN:
-    $ pg_analyse run --dsn "host=myhost.net port=6432 user=test password=xxx sslmode=verify-full sslrootcert=/home/my.pem"
-    ; Local connection as `postgres` user with password:
-    $ pg_analyse run --dsn "host=127.0.0.1 user=postgres password=yourpass"
-
-    ; Output analysis result as json (instead of tables):
-    $ pg_analyse run --fmt json
-
-
-Adding Inspections
-------------------
-
-To add a new inspection to ``pg_analyse``:
-
-1. Compose SQL for inspection and put it into a file under ``sql/`` directory.
-2. Add a subclass of ``Inspection`` into ``inspections/bundled.py``. Fill in ``alias``, ``sql_name`` attributes (see docstrings in ``Inspection``).
+1. Compose SQL for inspection and put it into a file under `sql/` directory.
+2. Add a subclass of `Inspection` into `inspections/bundled.py`. Fill in `alias`, `sql_name` attributes (see docstrings in `Inspection`).
